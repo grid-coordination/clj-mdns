@@ -3,15 +3,15 @@
  :mvn/repos {"acn-snapshots" {:url "https://repo.deps.co/aircraft-noise/snapshots"}
              "acn-releases"  {:url "https://repo.deps.co/aircraft-noise/releases"}}
 
- :deps {org.clojure/clojure              {:mvn/version "1.11.1"}
+ :deps {org.clojure/clojure              {:mvn/version "1.12.0"}
         medley/medley                    {:mvn/version "1.4.0"}
-        org.jmdns/jmdns                  {:mvn/version "3.5.7"}
-        org.apache.commons/commons-lang3 {:mvn/version "3.12.0"}}
+        org.jmdns/jmdns                  {:mvn/version "3.6.0"}
+        org.apache.commons/commons-lang3 {:mvn/version "3.17.0"}}
 
  :aliases
  {:mvn/artifact-id mdns
   :mvn/group-id    com.dcj
-  :mvn/version     "0.0.1-SNAPSHOT"
+  :mvn/version     "0.0.2-SNAPSHOT"
   :jar/file-name   "mdns.jar"
 
   :jar {:replace-deps
@@ -36,7 +36,3 @@
   :dev {:extra-paths ["dev"]}
 
   }}
-
-
-
-
