@@ -11,61 +11,87 @@ energy.grid-coordination/clj-mdns {:mvn/version "0.0.2-SNAPSHOT"}
 
 ## Usage
 
-### Create a JmDNS instance
+```clojure
+(require '[mdns.core :as mdns])
+```
+
+### Create an instance
 
 Bind to a specific network interface to discover services on the LAN.
 The no-arg constructor binds to loopback and won't see LAN traffic.
 
 ```clojure
-(require '[mdns.instance :as instance])
-(require '[mdns.client :as client])
-
-;; Bind to a specific interface
-(def jmdns (instance/create (java.net.InetAddress/getByName "192.168.1.100")))
+(def jmdns (mdns/create (java.net.InetAddress/getByName "192.168.1.100")))
 ```
 
-### Discover services
+### Listen for services (async)
 
-`add-service-listener` takes a callback that receives an event type
-(`:added`, `:removed`, `:resolved`) and a parsed event map:
+`listen` registers a callback that receives event maps asynchronously.
+With no service type, it listens for all discovered types:
 
 ```clojure
-(def events (atom []))
+(mdns/listen jmdns
+  (fn [event]
+    (println (:mdns.event/type event)
+             (:mdns.service/name (:mdns.event/service event)))))
 
-(client/add-service-listener jmdns
-  (fn [event-type parsed]
-    (println event-type (:name parsed) (:service-type parsed))
-    (swap! events conj {:event event-type :data parsed})))
-
-;; Events arrive asynchronously as services are discovered:
-;; :added "my-host" "_ssh._tcp.local."
-;; :resolved "my-host" "_ssh._tcp.local."
+;; :mdns.event/added "my-host"
+;; :mdns.event/resolved "my-host"
 ```
 
-### Listen for a specific service type
+Listen for a specific service type:
 
 ```clojure
-(client/add-service-listener jmdns "_http._tcp.local."
-  (fn [event-type parsed]
-    (println event-type parsed)))
+(mdns/listen jmdns "_http._tcp.local."
+  (fn [event]
+    (println event)))
 ```
 
-### Parsed event map
+### List services (sync)
 
-Resolved events include address and TXT record data:
+Query for services of a given type, blocking until timeout:
 
 ```clojure
-{:name "my-host"
- :service-type "_companion-link._tcp.local."
- :ipv4 "192.168.1.100"
- :ipv6 "fe80:0:0:0:..."
- :txt {:key1 "value1" :key2 "value2"}}
+(mdns/list-services jmdns "_ssh._tcp.local.")
+;; => [{:mdns.service/name "my-host"
+;;      :mdns.service/type "_ssh._tcp.local."
+;;      :mdns.service/ipv4 "192.168.1.100"
+;;      :mdns.service/port 22
+;;      ...}]
+
+(mdns/list-services jmdns "_http._tcp.local." 10000)  ; custom timeout ms
+```
+
+### Service map
+
+Coerced services use namespaced keywords and carry the original
+`ServiceInfo` bean as metadata:
+
+```clojure
+{:mdns.service/name           "my-host"
+ :mdns.service/type           "_companion-link._tcp.local."
+ :mdns.service/qualified-name "my-host._companion-link._tcp.local."
+ :mdns.service/application    "companion-link"
+ :mdns.service/protocol       :tcp
+ :mdns.service/domain         "local"
+ :mdns.service/port           63632
+ :mdns.service/server         "my-host.local."
+ :mdns.service/ipv4           "192.168.1.100"
+ :mdns.service/ipv6           "fe80:0:0:0:..."
+ :mdns.service/addresses      ["192.168.1.100" "[fe80:...]"]
+ :mdns.service/urls           ["http://192.168.1.100:63632"]
+ :mdns.service/priority       0
+ :mdns.service/weight         0
+ :mdns.service/txt            {"key1" "value1" "key2" "value2"}}
+
+;; Access the raw ServiceInfo bean via metadata:
+(:mdns/raw (meta service))
 ```
 
 ### Cleanup
 
 ```clojure
-(.close jmdns)
+(mdns/close jmdns)
 ```
 
 ## Development

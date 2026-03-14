@@ -1,9 +1,8 @@
 {:paths ["src" "resources"]
 
  :deps {org.clojure/clojure              {:mvn/version "1.12.3"}
-        medley/medley                    {:mvn/version "1.4.0"}
-        org.jmdns/jmdns                  {:mvn/version "3.6.0"}
-        org.apache.commons/commons-lang3 {:mvn/version "3.17.0"}}
+        metosin/malli                    {:mvn/version "0.18.0"}
+        org.jmdns/jmdns                  {:mvn/version "3.6.0"}}
 
  :aliases
  {:dev {:extra-paths ["dev"]}
