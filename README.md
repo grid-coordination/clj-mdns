@@ -102,4 +102,4 @@ clojure -M:nrepl    # Start nREPL server
 
 ## License
 
-MIT License. Copyright (c) 2024-2026 Don Jackson. See [LICENSE](LICENSE) for details.
+[MIT License](LICENSE) — Copyright (c) 2022-2026 Clark Communications Corporation
