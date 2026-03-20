@@ -12,7 +12,7 @@
         cmds     (b/java-command
                   {:basis      basis
                    :main      'clojure.main
-                   :main-args ["-m" "kaocha.runner"]})
+                   :main-args ["-m" "kaocha.runner" "--config-file" "tests.edn"]})
         {:keys [exit]} (b/process cmds)]
     (when-not (zero? exit) (throw (ex-info "Tests failed" {}))))
   opts)

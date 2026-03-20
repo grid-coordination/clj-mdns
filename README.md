@@ -1,12 +1,15 @@
 # clj-mdns
 
+[![Clojars Project](https://img.shields.io/clojars/v/energy.grid-coordination/clj-mdns.svg)](https://clojars.org/energy.grid-coordination/clj-mdns)
+
 Clojure wrapper around [jmdns](https://github.com/jmdns/jmdns) for mDNS/DNS-SD service discovery.
 
-## Dependency
+## Installation
+
+Add to your `deps.edn`:
 
 ```clojure
-;; deps.edn
-energy.grid-coordination/clj-mdns {:mvn/version "0.0.2-SNAPSHOT"}
+{:deps {energy.grid-coordination/clj-mdns {:mvn/version "0.1.0-SNAPSHOT"}}}
 ```
 
 ## Usage
