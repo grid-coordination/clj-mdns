@@ -24,7 +24,10 @@
          :jar-file (format "target/%s-%s.jar" (name lib) version)
          :description "Clojure mDNS/DNS-SD service discovery library wrapping jmdns"
          :url "https://grid-coordination.energy"
-         :licenses [{:name "MIT" :url "https://opensource.org/licenses/MIT"}]
+         :pom-data [[:licenses
+                     [:license
+                      [:name "MIT"]
+                      [:url "https://opensource.org/licenses/MIT"]]]]
          :scm {:tag (str "v" version)
                :url "https://github.com/grid-coordination/clj-mdns"}
          :basis (b/create-basis {})
