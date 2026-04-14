@@ -1,6 +1,5 @@
 (ns mdns.core
-  (:require [clojure.string :as string]
-            [malli.core :as m])
+  (:require [clojure.string :as string])
   (:import [javax.jmdns JmDNS ServiceInfo ServiceListener ServiceTypeListener]
            [java.net InetAddress]))
 
