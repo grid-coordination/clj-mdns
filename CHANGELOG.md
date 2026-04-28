@@ -2,23 +2,19 @@
 All notable changes to this project will be documented in this file. This change log follows the conventions of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
-### Changed
-- Add a new arity to `make-widget-async` to provide a different widget shape.
 
-## [0.1.1] - 2022-04-17
-### Changed
-- Documentation on how to make the widgets.
-
-### Removed
-- `make-widget-sync` - we're all async, all the time.
-
-### Fixed
-- Fixed widget maker to keep working when daylight savings switches over.
-
-## 0.1.0 - 2022-04-17
+## [0.1.1] - 2026-04-27
 ### Added
-- Files from the new template.
-- Widget maker public API - `make-widget-sync`.
+- Embed git build provenance in the JAR via `com.dcj/build-provenance` 0.2.0. Each JAR now carries `META-INF/energy.grid-coordination/clj-mdns/build-provenance.{edn,json}` with `:artifact :version :commit :commit-abbreviated :branch :describe :dirty`.
+- README badges for `md-docs` and `build-provenance` conventions.
 
-[Unreleased]: https://github.com/com.dcj/mdns/compare/0.1.1...HEAD
-[0.1.1]: https://github.com/com.dcj/mdns/compare/0.1.0...0.1.1
+### Changed
+- Bump `com.dcj/codox-md` build-time dep to 0.2.0.
+
+## [0.1.0] - 2026-04
+### Added
+- Initial release. Clojure wrapper around jmdns for mDNS/DNS-SD service discovery.
+
+[Unreleased]: https://github.com/grid-coordination/clj-mdns/compare/v0.1.1...HEAD
+[0.1.1]: https://github.com/grid-coordination/clj-mdns/compare/v0.1.0...v0.1.1
+[0.1.0]: https://github.com/grid-coordination/clj-mdns/releases/tag/v0.1.0
